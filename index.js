@@ -10,6 +10,16 @@ const CLIENT_ID = process.env.CLIENT_ID;
 const CLIENT_SECRET = process.env.CLIENT_SECRET;
 const REDIRECT_URI = process.env.REDIRECT_URI;
 
+// Обработчик для Google OAuth редиректа
+app.get('/redirect', (req, res) => {
+  const code = req.query.code;
+  if (!code) {
+    return res.send('Нет кода авторизации!');
+  }
+  res.send('Google вернул вас сюда! Ваш code: ' + code);
+});
+
+// Обработчик для обмена code на токены
 app.post('/api/auth/google', async (req, res) => {
   const { code } = req.body;
   try {
